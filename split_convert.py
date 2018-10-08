@@ -61,6 +61,7 @@ def createGrid(file):
                     polygon = Polygon([(ringXleftOrigin, ringYtop), (ringXrightOrigin, ringYtop), (ringXrightOrigin, ringYbottom), (ringXleftOrigin, ringYbottom)])
                     ds = list(d.items(bbox=polygon.bounds))
                     # check if there is any file data in the grid
+                    # otherwise don't add the new square
                     if len(ds) > 0:
                         recs.append({'geometry': mapping(polygon), 'properties': {'grid': id}})
                         id += 1
@@ -93,7 +94,7 @@ def joinLayers(file):
 
 
 def shape2osm(file, translation):
-    ''' Convert given .shp file to .osm.pbf file '''
+    ''' Convert .shp file to .osm.pbf file '''
     name = file.split('/')[-1].replace('.shp', '')
     dir = os.path.join(newDir, name)
     if not os.path.exists(dir):
